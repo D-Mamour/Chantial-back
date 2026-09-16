@@ -4,11 +4,9 @@ import re
 
 class ServiceOCR:
     """Extrait et normalise les informations d'une facture ou d'un justificatif."""
-
     @staticmethod
     def normaliser_montant(valeur):
         """Transforme un montant textuel en Decimal."""
-        
         if valeur is None: return None
         propre=re.sub(r"[^\d,.\-]","",str(valeur))
         if "," in propre and "." not in propre: propre=propre.replace(",",".")

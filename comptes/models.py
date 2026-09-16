@@ -1,13 +1,12 @@
+"""Modèles liés aux comptes et aux rôles."""
 import uuid
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 
 class GestionnaireUtilisateur(BaseUserManager):
     """Crée les utilisateurs Chantial avec l'email comme identifiant."""
-
     def create_user(self, email, password=None, **extra_fields):
         """Crée un utilisateur standard et chiffre son mot de passe."""
-
         if not email:
             raise ValueError("L'email est obligatoire.")
         email = self.normalize_email(email)
@@ -18,7 +17,6 @@ class GestionnaireUtilisateur(BaseUserManager):
 
     def create_superuser(self, email, password=None, **extra_fields):
         """Crée un administrateur Django."""
-        
         extra_fields.setdefault("role", "ADMINISTRATEUR")
         extra_fields.setdefault("statut", "ACTIF")
         extra_fields.setdefault("is_staff", True)
@@ -27,7 +25,6 @@ class GestionnaireUtilisateur(BaseUserManager):
 
 class Utilisateur(AbstractUser):
     """Représente entrepreneur, bailleur ou administrateur via l'attribut rôle."""
-
     class Role(models.TextChoices):
         ENTREPRENEUR="ENTREPRENEUR","Entrepreneur"
         BAILLEUR="BAILLEUR","Bailleur"

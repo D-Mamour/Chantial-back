@@ -1,4 +1,4 @@
-"""Configuration d'administration de l'application documents."""
+"""Configuration d'administration de l'application audit."""
 from django.contrib import admin
 from . import models
 

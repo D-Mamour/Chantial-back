@@ -5,7 +5,6 @@ from .models import Utilisateur
 
 class UtilisateurSerializer(serializers.ModelSerializer):
     """Expose les données non sensibles du compte."""
-
     class Meta:
         model = Utilisateur
         fields = ["id","email","first_name","last_name","telephone","role","statut","date_creation"]
@@ -13,27 +12,23 @@ class UtilisateurSerializer(serializers.ModelSerializer):
 
 class InscriptionSerializer(serializers.ModelSerializer):
     """Crée un compte avec un mot de passe correctement haché."""
-
     mot_de_passe = serializers.CharField(write_only=True, min_length=8)
     class Meta:
         model = Utilisateur
         fields = ["email","mot_de_passe","first_name","last_name","telephone","role"]
 
     def create(self, validated_data):
-        """Délègue la création au gestionnaire utilisateur"""
-
+        """Délègue la création au gestionnaire utilisateur."""
         mdp = validated_data.pop("mot_de_passe")
         return Utilisateur.objects.create_user(password=mdp, **validated_data)
 
 class ConnexionSerializer(serializers.Serializer):
     """Valide une tentative de connexion."""
-
     email = serializers.EmailField()
     mot_de_passe = serializers.CharField(write_only=True)
 
     def validate(self, attrs):
         """Authentifie puis vérifie que le compte est actif."""
-
         utilisateur = authenticate(email=attrs["email"], password=attrs["mot_de_passe"])
         if not utilisateur:
             raise serializers.ValidationError("Email ou mot de passe incorrect.")

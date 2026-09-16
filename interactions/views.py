@@ -1,6 +1,3 @@
-from django.shortcuts import render
-
-# Create your views here.
 """API des demandes et alertes."""
 from django.db.models import Q
 from rest_framework import viewsets

@@ -9,13 +9,11 @@ class ServiceExtraction:
     @staticmethod
     def extraire_pdf(chemin):
         """Extrait le texte d'un fichier PDF page par page."""
-        
         lecteur = PdfReader(str(chemin))
         return "\n".join((page.extract_text() or "") for page in lecteur.pages).strip()
 
     def extraire_texte(self, document):
         """Choisit la méthode d'extraction selon le type du fichier."""
-
         chemin = Path(document.fichier.path)
         extension = chemin.suffix.lower()
         if extension == ".pdf":
